@@ -1,0 +1,799 @@
+/* common */
+html {
+  font-size: 62.5%;
+  -webkit-scroll-behavior: smooth;
+  scroll-behavior: smooth;
+  font-family: "游ゴシック体", YuGothic, "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック", "Yu Gothic", 'ヒラギノ角ゴシック Pro', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
+  /* 色設定 */
+  --txtcolor: #4a4a4a;
+  --btncolor: #97968c;
+}
+
+h1, h2 {
+  color: var(--txtcolor);
+  margin: 0;
+}
+h2 {
+  font-size: 2.6rem;
+  line-height: 2.5em;
+  font-weight: 600;
+}
+
+p, a {
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: var(--txtcolor);
+  margin: 0;
+}
+/* リンク付きテキストのスタイルと色を変えない */
+a {
+  text-decoration: none;
+}
+a:link, a:visited {
+  color: var(--txtcolor);
+}
+a[href^="tel:"]{
+  pointer-events: none;
+}
+
+/* リストのスタイルを消す */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+img {
+  vertical-align: bottom;
+}
+
+body {
+  margin: 0;
+  text-align: center;
+}
+
+header {
+  margin-bottom: 200px;
+  position: relative;
+  opacity: 0;
+  z-index: 1;
+  animation: fadeIn 1.5s ease-in-out 1 forwards;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ハンバーガーメニュー */
+/* スマホ画面のみ表示 */
+.hmbg-menu {
+  display: none;
+}
+#menu-btn-check {
+  display: none; /* チェックボックスを隠す */
+}
+.menu-btn {
+  position: fixed;
+  top: -2px;
+  right: 16px;
+  display: flex;
+  height: 24px;
+  width: 24px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 90;
+}
+.menu-open {
+  animation: Rotate 8s linear infinite forwards;
+}
+@keyframes Rotate {
+  43% {transform: rotate(0);}
+  50% {transform: rotate(180deg);}
+  93% {transform: rotate(180deg);}
+  100% {transform: rotate(360deg);}
+}
+
+.menu-btn span,
+.menu-btn span:before,
+.menu-btn span:after {
+  content: '';
+  display: block;
+  height: 2px;
+  width: 20px;
+  border-radius: 2px;
+  background-color: var(--txtcolor);
+  position: absolute;
+}
+.menu-btn span {
+transition: background-color .4s .3s;
+}
+.menu-btn span:before {
+  bottom: 6px;
+  transition: transform .3s, bottom .4s .3s;
+}
+.menu-btn span:after {
+  top: 6px;
+  transition: transform .3s, top .4s .3s;
+}
+
+#menu-btn-check:checked ~ .menu-btn {
+  animation: none;
+}
+
+/* ≡を×にする効果 */
+#menu-btn-check:checked ~ .menu-btn span {
+  background-color: rgba(255, 255, 255, 0);
+  transition: background-color .4s;
+}
+#menu-btn-check:checked ~ .menu-btn span:before {
+  bottom: 0;
+  transform: rotate(45deg);
+  transition: bottom .4s, transform .6s .4s;
+}
+#menu-btn-check:checked ~ .menu-btn span:after {
+  top: 0;
+  transform: rotate(-45deg);
+  transition: top .4s, transform .6s .4s;
+}
+
+.menu-content {
+  /* display: none; */
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 80;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(200, 237, 251, 0.801);
+  opacity: 0;
+  transition: opacity 0.7s, transform 0s 0.7s;
+  transform: scale(0);
+}
+#menu-btn-check:checked ~ .menu-content {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 1s;
+}
+.close_trigger {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.menu-content ul {
+  margin: 6vh 0 0 0;
+  list-style: none;
+}
+.menu-content ul li a {
+  font-size: 3rem;
+  line-height: 2.5em;
+  font-weight: bold;
+  box-sizing: border-box;
+  color:var(--txtcolor);
+  text-decoration: none;
+  border-bottom: 2px solid currentColor;
+  position: relative;
+  cursor: pointer;
+}
+
+header .top {
+  position: fixed;
+  top: 0;
+  /* 幅を固定し中央ぞろえにしたい場合 */
+  /* left: calc(50% - 512px); */
+  /* margin-left: calc(50% - 512px); */
+  /* width: 1024px; */
+  padding-top: 2px;
+  width: 100%;
+  height: 34px;
+  z-index: 9;
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+header .logo {
+  margin-left: 7%;
+  display: flex;
+  align-items: baseline;
+}
+
+header .logo h1 {
+  font-size: 3.3rem;
+  line-height: 3.3rem;
+  letter-spacing: -1px;
+  margin: 0;
+}
+
+header .logo p {
+  font-size: 1.4rem;
+}
+
+nav.normal-menu {
+  margin: 3px 7% 0 0;
+  width: 400px;
+}
+
+nav.normal-menu ul {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+nav.normal-menu li a {
+  font-size: 2.2rem;
+  display: block;
+  height: 27px;
+  border-bottom: 2px solid transparent;
+  transition: all .8s;
+}
+nav.normal-menu li a:hover {
+  border-bottom: 2px solid currentColor;
+}
+
+header > img {
+  margin-top: 46px;
+  width: 100%;
+  height: 35vw;
+  object-fit: cover;
+  object-position: 50% 55%;
+}
+
+.logo-button {
+  position: absolute;
+  bottom: -75px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.soap-logo {
+  width: 52rem;
+  margin-left: 4vw;
+}
+
+.soap-logo h1 {
+  font-size: 8rem;
+  line-height: 8rem;
+  letter-spacing: -1px;
+  width: 10em;
+  transform: scaleX(.7) translate(-2.6em);
+}
+
+.soap-logo p {
+  font-size: 2rem;
+  text-align: left;
+}
+
+ul.navbutton {
+  width: 450px;
+  margin-right: 4vw;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* ページ内の全ボタン類まとめ */
+.navbutton a, #btnblock a {
+  display: block;
+  padding: 15px 0;
+  width: 10.5em;
+  font-size: 2rem;
+  background-color: white;
+  /* background-image: linear-gradient(45deg, white 60%, var(--btncolor)); */
+  border: 3px solid var(--btncolor);
+  border-radius: 8px;
+  box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.3);
+  color: var(--txtcolor);
+  text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
+  transition: all 1s;
+}
+.navbutton a:hover, #btnblock a:hover {
+  background-color: var(--btncolor);
+  /* background-image: linear-gradient(var(--txtcolor) 100%, white); */
+  color: white;
+  text-shadow: none;
+}
+
+.store-btn a::before {
+  font-family: "Font Awesome 5 Free";
+  content: "\f218";
+  font-weight: 900;
+  padding-right: 10px;
+}
+.lineup-btn a::before {
+  font-family: "Font Awesome 5 Free";
+  content: "\e05e";
+  font-weight: 900;
+  padding-right: 10px;
+}
+.concept-btn a::before {
+  font-family: "Font Awesome 5 Free";
+  content: "\f06c";
+  font-weight: 900;
+  padding-right: 10px;
+}
+
+ul#btnblock {
+  margin: 0 auto;
+  max-width: 960px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#btnblock a {
+  margin-left: 0;
+  margin-right: 0;
+  width: 12em;
+}
+
+#appeal {
+  margin: 0 auto 180px;
+}
+
+#appeal, #product-desc {
+  max-width: 960px;
+  text-align: left;
+  display: flex;
+}
+
+#product-desc {
+  margin: 180px auto;
+  justify-content: end;
+}
+
+#appeal img {
+  opacity: 0;
+  animation: fadeIn 1.5s ease-in-out 1.2s 1 forwards;
+}
+
+/* スクロールアニメーションさせるセレクターをまとめる */
+#appeal .content, #product-desc .content, #product-desc img, img.img-middle, ul.btm-img, #sns, #btnblock, footer {
+  opacity: 0;
+  transition: opacity 1.3s;
+}
+#appeal .content.show, #product-desc .content.show, #product-desc img.show, img.img-middle.show, ul.btm-img.show, #sns.show, #btnblock.show, footer.show {
+  opacity: 1;
+}
+
+#appeal img, #product-desc img {
+  width: 400px;
+  height: 500px;
+  object-fit: cover;
+  object-position: 40% 60%;
+}
+
+#appeal .content {
+  padding-left: 4rem;
+}
+#product-desc .content {
+  padding-right: 4rem;
+}
+
+section .content p {
+  line-height: 3em;
+}
+
+img.img-middle {
+  width: 100%;
+  height: 40vw;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+ul.btm-img {
+  margin: 0 auto;
+  max-width: 1280px;
+  display: flex;
+  justify-content: space-around;
+}
+
+ul.btm-img li {
+  max-width: 280px;
+  height: 360px;
+}
+
+ul.btm-img li img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#sns {
+  margin: 100px auto 60px;
+  max-width: 1024px;
+  display: flex;
+  justify-content: center;
+}
+
+#sns h2 {
+  margin-right: 40px;
+  font-size: 2.4rem;
+  font-weight: normal;
+}
+
+#sns h2:last-of-type {
+  letter-spacing: -1px;
+}
+
+#sns ul {
+  margin: 0;
+  width: 180px;
+  display: flex;
+  justify-content: space-between;
+}
+
+#sns ul a {
+  font-size: 2.8rem;
+}
+
+footer {
+  margin-top: 10rem;
+  padding-top: 2rem;
+  border-top: .5px solid var(--btncolor);
+}
+
+footer nav {
+  display: flex;
+  justify-content: center;
+}
+
+footer nav a img {
+  height: 1.1em;
+  vertical-align: sub;
+}
+
+footer nav > a {
+  font-size: 3.4rem;
+  margin-left: 8rem;
+  line-height: 1;
+}
+
+footer ul {
+  margin: 0 5% 0 auto;
+  width: 500px;
+  display: flex;
+  justify-content: space-around;
+}
+
+footer li {
+  display: flex;
+  align-items: center;
+}
+
+footer li > a {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+footer nav > a,footer li > a {
+  border-bottom: 2px solid transparent;
+  transition: all .8s;
+}
+footer nav > a:hover,footer li > a:hover {
+  border-bottom: 2px solid currentColor;
+}
+
+footer p {
+  margin: 1rem 4rem 1rem 0;
+  text-align: right;
+  font-size: 1.5rem;
+}
+
+/* medium screen */
+@media (max-width: 1024px) {
+  h2 {
+    font-size: 2.4rem;
+    line-height: 2.2em;
+  }
+  p, a {
+    font-size: 1.6rem;
+  }
+
+  header {
+    margin-bottom: 240px;
+  }
+
+  header .top {
+    height: 30px;
+  }
+
+  header .logo {
+    margin-left: 3%;
+    min-width: 270px;
+  }
+
+  header .logo h1 {
+    font-size: 3rem;
+    line-height: 3rem;
+  }
+
+  header .logo p {
+    display: none;
+  }
+
+  nav.normal-menu {
+    margin-right: 3%;
+    width: 360px;
+  }
+
+  nav.normal-menu li a {
+    font-size: 1.8rem;
+  }
+
+  .logo-button {
+    position: absolute;
+    bottom: -166px;
+    width: 100%;
+    display: block;
+  }
+
+  .soap-logo {
+    width: 40rem;
+    margin-left: 4vw;
+  }
+
+  .soap-logo h1 {
+    font-size: 7.4rem;
+    line-height: 7.4rem;
+    transform: scaleX(.7) translate(-3.2em);
+  }
+
+  .soap-logo p {
+    font-size: 1.8rem;
+  }
+
+  ul.navbutton {
+    min-width: 599px;
+    margin: 2rem auto;
+  }
+
+  /* ボタン大きさ */
+  .navbutton a {
+    padding: 10px 0;
+    width: 14em;
+  }
+  #btnblock a {
+    margin: 4px;
+    padding: 12px 0;
+    width: 14em;
+  }
+
+  ul#btnblock {
+    max-width: 960px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  #appeal {
+    margin: 0 auto 180px;
+  }
+
+  #appeal, #product-desc {
+    max-width: 720px;
+    /* width: 90%; */
+  }
+
+  #appeal img, #product-desc img {
+    width: 320px;
+    height: 400px;
+    object-position: 50% 60%;
+  }
+
+  #appeal .content {
+    padding-left: 2rem;
+  }
+
+  #product-desc {
+    margin: 180px auto;
+  }
+
+  #product-desc .content {
+    padding-right: 2rem;
+  }
+
+  ul.btm-img {
+    max-width: 1280px;
+  }
+
+  ul.btm-img li {
+    height: 320px;
+  }
+
+  footer nav {
+    display: flex;
+    justify-content: center;
+  }
+
+  footer nav > a {
+    font-size: 3rem;
+    margin-left: 3%;
+  }
+
+  footer ul {
+    margin: 0 0 0 auto;
+    width: 370px;
+    justify-content: space-evenly;
+  }
+}
+
+/* small screen */
+@media (max-width: 599px) {
+  h2 {
+    font-size: 2rem;
+    line-height: 2.2em;
+  }
+  p, a {
+    font-size: 1.4rem;
+  }
+
+  header {
+    margin-bottom: 150px;
+  }
+
+  header .top {
+    padding-top: 0;
+    height: auto;
+  }
+  header .logo h1 {
+    font-size: 2rem;
+    line-height: 2rem;
+    letter-spacing: normal;
+    font-weight: normal;
+  }
+  header > img {
+    margin-top: 26px;
+  }
+
+/* 通常メニュー非表示　ハンバーガーメニュー表示 */
+  nav.normal-menu {
+    display: none;
+  }
+  .hmbg-menu {
+    display: block;
+  }
+
+    /* ボタン関係 */
+  ul.navbutton, ul#btnblock {
+    min-width: 0;
+    width: 100%;
+    margin: 1.6rem 0;
+    justify-content: space-evenly;
+  }
+
+  .navbutton a, #btnblock a {
+    font-size: 4vw;
+    width: 44vw;
+    margin: 0;
+  }
+
+  #btnblock a {
+    margin-top: .5em;
+  }
+
+  .logo-button {
+    bottom: -106px;
+  }
+
+  .soap-logo {
+    width: 320px;
+    margin-left: 4vw;
+  }
+  
+  .soap-logo h1 {
+    font-family: 'ヒラギノ角ゴシック Pro', 'Hiragino Kaku Gothic Pro', 'MS PGothic', sans-serif;
+    font-size: 4rem;
+    letter-spacing: normal;
+    line-height: 4rem;
+    transform: scaleX(.7) translate(-2.4em);
+  }
+  
+  .soap-logo p {
+    font-size: 1.3rem;
+  }
+
+  #appeal {
+    margin: 0 auto 50px;
+  }
+
+  #appeal, #product-desc {
+    display: block;
+  }
+
+  #appeal img, #product-desc img {
+    width: 60%;
+    height: 30vh;
+    display: block;
+    margin: 0 auto;
+  }
+
+  #appeal .content, #product-desc .content {
+    width: 70%;
+    margin: 4rem auto 0;
+    padding: 0;
+  }
+
+  section .content p {
+    line-height: 3em;
+  }
+
+  #product-desc {
+    margin: 50px auto 80px;
+  }
+
+  ul.btm-img {
+    margin: 0 auto;
+    max-width: 70%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  ul.btm-img li:first-of-type {
+    width: 100%;
+    margin-bottom: 1vh;
+  }
+  ul.btm-img li {
+    max-width: none;
+    width: 49%;
+    height: 20vh;
+  }
+
+  #sns {
+    margin: 40px auto;
+    max-width: 1024px;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+  }
+
+  #sns h2 {
+    margin: 0 0 0 .4em;
+    font-size: 2.2rem;
+    line-height: 1.6em;
+  }
+  #sns h2:last-of-type {
+    display: none;
+  }
+
+  #sns ul {
+    width: 140px;
+  }
+
+  #sns ul a {
+    font-size: 2.4rem;
+  }
+
+  footer  {
+    margin-top: 5rem;
+  }
+
+  footer nav {
+    flex-wrap: wrap;
+  }
+
+  footer nav > a {
+    font-size: 2rem;
+  }
+
+  footer ul {
+    margin: .8em 15% 0;
+    /* margin-top: .5em; */
+    width: 500px;
+    /* display: flex; */
+    justify-content: space-between;
+  }
+
+  footer li > a {
+    font-size: 1.6rem;
+  }
+
+  footer p {
+    margin-right: 1rem;
+    font-size: 1.2rem;
+  }
+}
